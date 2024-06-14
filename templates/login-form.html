@@ -1,0 +1,263 @@
+{% load static %}
+
+<div style="display:none;" hidden="true">
+    {% include 'header.html' %}
+</div>
+
+<style>
+    body {
+        margin: 0;
+        padding-top: 10%;
+        font-family: Arial, sans-serif; /* Specify a suitable font-family */
+    }
+
+    .container4 {
+        background: none;
+        padding: 3.5%;
+        width: 50%;
+        margin: auto;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .col-25 {
+        flex: 25%;
+        padding: 0 15px;
+    }
+
+    .col-75 {
+        flex: 75%;
+        padding: 0 15px;
+    }
+
+    .col-100 {
+        flex: 100%;
+        text-align: center;
+    }
+
+    input[type="submit"] {
+        padding: 1%;
+        width: 10%;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-left: 45%;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #0a8c14;
+    }
+
+    @media screen and (max-width: 600px) {
+        .col-25, .col-75 {
+            flex: 100%;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            margin: 0;
+        }
+
+        .container4 {
+            width: 100%;
+            margin: 10px;
+            padding: 10%;
+        }
+    }
+
+    input[type="password"], input[type="text"] {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+    }
+
+    .btn-toggle {
+        margin: 20px auto;
+        text-align: center;
+    }
+
+    .btn-toggle .btn {
+        padding: 10px 20px;
+        cursor: pointer;
+        border: none;
+        color: white;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+    }
+
+    .btn-primary:hover, .btn-secondary:hover {
+        background-color: #4a8fef;
+    }
+
+    .btn.active {
+        background-color: #0056b3;
+    }
+
+    .field-icon {
+        float: right;
+        margin-left: -25px;
+        margin-top: -25px;
+        position: relative;
+        z-index: 2;
+        cursor: pointer;
+    }
+
+    /* Error message styles */
+    .error-box {
+        background-color: #f8d7da; /* Red background color */
+        color: #721c24; /* Dark red text color */
+        border: 1px solid #f5c6cb; /* Lighter red border */
+        padding: 10px 20px;
+        border-radius: 4px;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .error-box.show {
+        display: block; /* Show error box when needed */
+    }
+</style>
+
+<body>
+    
+    <div class="btn-toggle" role="group">
+        <button type="button" class="btn btn-primary active" onclick="showForm('staff')">Staff Login</button>
+        <button type="button" class="btn btn-secondary" onclick="showForm('admin')">Admin Login</button>
+    </div>
+
+    <div class="container4" id="staff-form">
+        
+        <center>
+            <h2 class="title">Staff Login</h2>
+        </center>
+        
+        {% if error %}
+        <!-- Error box for staff form -->
+        <div class="error-box" id="staff-error-box">
+            
+            Invalid credentials. Please try again.
+            
+        </div>
+        {% endif %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-25">
+                    <label for="staff-username">Username</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="staff-username" name="staffusername" placeholder="" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="staff-password">Password</label>
+                </div>
+                <div class="col-75">
+                    <input type="password" id="staff-password-field" placeholder="" name="staffpassword" required />
+                    <br> <span toggle="#staff-password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                </div>
+            </div>
+            <br>
+            <div class="row col-100">
+                <input type="submit" value="Login" class="btn btn-primary" name="staff_submit">
+            </div>
+        </form>
+    </div>
+
+    <div class="container4 hidden" id="admin-form" style="display: none;">
+        <center>
+            <h2 class="title">Admin Login</h2>
+        </center>
+        {% if error %}
+        <div class="error-box" id="staff-error-box">
+            Invalid credentials. Please try again.
+        </div>
+        {% endif %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-25">
+                    <label for="admin-username">Username</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="admin-username" name="adminusername" placeholder="" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="admin-password">Password</label>
+                </div>
+                <div class="col-75">
+                    <input type="password" id="admin-password-field" placeholder="" name="adminpassword" required />
+                    <br><span toggle="#admin-password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                </div>
+            </div>
+            <br>
+            <div class="row col-100">
+                <input type="submit" value="Login" name="admin_submit" class="btn btn-primary">
+            </div>
+        </form>
+    </div>
+
+    
+    <script>
+        function showForm(formType) {
+            const staffForm = document.getElementById('staff-form');
+            const adminForm = document.getElementById('admin-form');
+            const staffButton = document.querySelector('.btn-toggle .btn-primary');
+            const adminButton = document.querySelector('.btn-toggle .btn-secondary');
+
+            if (formType === 'staff') {
+                staffForm.style.display = 'block';
+                adminForm.style.display = 'none';
+                staffButton.classList.add('active');
+                adminButton.classList.remove('active');
+                adminButton.style.backgroundColor = '#6c757d';
+                staffButton.style.backgroundColor = '#006aff';
+            } else if (formType === 'admin') {
+                adminForm.style.display = 'block';
+                staffForm.style.display = 'none';
+                adminButton.classList.add('active');
+                adminButton.style.backgroundColor = '#006aff';
+                staffButton.style.backgroundColor = '#6c757d';
+                staffButton.classList.remove('active');
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const togglePassword = document.querySelectorAll(".toggle-password");
+
+            togglePassword.forEach(function (toggle) {
+                toggle.addEventListener("click", function () {
+                    const passwordField = document.querySelector(toggle.getAttribute("toggle"));
+                    const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
+                    passwordField.setAttribute("type", type);
+
+                    toggle.classList.toggle("fa-eye");
+                    toggle.classList.toggle("fa-eye-slash");
+                });
+            });
+        });
+
+        // Function to display error message box
+      
+    </script>
+</body>
+
+</html>

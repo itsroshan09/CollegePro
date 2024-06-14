@@ -1,0 +1,78 @@
+{% load static %}
+{% include 'staff/header.html' %}
+<style>
+    td,
+    th {
+        padding: 20px;
+        text-align: center;
+    }
+</style>
+
+<!-- MAIN -->
+<div class="col p-4" style="overflow-y: auto;">
+    <center>
+        <h1 class="main-title">Marksheet Data</h1>
+    </center>
+
+    <a href="{% url 'staffaddmarksheet' %}"  class="btn btn-primary">Add New</a>
+    <table border="1" style="margin-left: 10%;">
+        <tr>
+            <th>No.</th>
+            <th>Enrollment No.</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Total Percentage</th>
+            <th>Exam Year</th>
+            <th>Action</th>
+        </tr>
+        {% if not marksheets|length == 0%}
+        {% for marksheet in marksheets %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ marksheet.enrollment }}</td>
+            <td>{{ marksheet.name }}</td>
+            <td>{{ marksheet.department }}</td>
+            <td>{{ marksheet.percentage|floatformat:2 }}%</td>
+            <td>{{ marksheet.year }}</td>
+            <td><a href="/staff/marksheet-profile?id={{ marksheet.id }}"><button class="btn btn-primary">View
+                        More</button></a><br><br>
+                <form method="post" onsubmit="return confirmDelete()">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{ marksheet.id}}" name="id"/>
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="7 ">No Data Found </td>
+        </tr>
+        {% endif %}
+    </table>
+    <br><br>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+            {% if marksheets.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ marksheets.previous_page_number }}" tabindex="-1">Previous</a>
+            </li>
+            {% endif %}
+            &nbsp;
+            {% if marksheets.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ marksheets.next_page_number }}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div><!-- Main Col END -->
+</div><!-- body-row END -->
+<script>
+    function confirmDelete() {
+        return confirm('Are you sure you want to delete this marksheet?');
+    }
+</script>
+</body>
+
+</html>

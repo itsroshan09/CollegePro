@@ -1,0 +1,54 @@
+{% load static %}
+{% include 'admin2/header.html'%}
+<!-- MAIN -->
+<div class="col p-4">
+    <div class="contactform">
+        <center>
+            <h2 class="title">Upload Documents</h2>
+        </center>
+        <div class="container4" style="margin-top: 1rem;">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-25">
+                        <label for="fname">Document Name</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" id="name" name="name" placeholder="Document name here.." required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="country">Department</label>
+                    </div>
+                    <div class="col-75">
+                        <select name="dept" required>
+                            <option>Artificial Intelligence Department</option>
+                            <option>Information Technology Department</option>
+                            <option>Computer Engineering Department</option>
+                            <option>Mechanical Engineering Department</option>
+                            <option>Electrical Engineering Department</option>
+                            <option>Civil Engineering Department</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <br>
+                    </div>
+                    <div class="col-75">
+                        <input id="subject" name="file" type="file" required />
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <input type="submit" name="submit" value="Upload">
+                </div>
+            </form>
+        </div>
+    </div>
+</div><!-- Main Col END -->
+</div><!-- body-row END -->
+</body>
+</html>

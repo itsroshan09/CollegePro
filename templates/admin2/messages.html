@@ -1,0 +1,104 @@
+{% load static %}
+{% include 'admin2/header.html'%}
+<style>
+    td,
+    th {
+        padding: 15px;
+        text-align: center;
+    }
+</style>
+<!-- MAIN -->
+<div class="col p-4" style="overflow-y: auto;">
+    <center>
+        <h1 class="main-title">Messages</h1>
+    </center>
+    <br>
+    <center>
+        <table border="all">
+            <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Message</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            {% if messages %}
+            {% for i in messages %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.name }}</td>
+                <td>{{ i.email }}</td>
+                <td>{{ i.message }}</td>
+                {% if not i.read %}
+                <td class="text-danger">Unread</td>
+                {% else %}
+                <td class="text-success">Read</td>
+                {% endif %}
+                <td>
+                    <a href="{% url 'replymessage' i.id %}"><button class="btn btn-primary">Reply</button></a>
+                    <br><br>
+                    <form class="delete-form" action="{% url 'messages' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ i.id }}">
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>
+                    <br>
+                    <form action="{% url 'messages' %}" method="GET">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ i.id }}">
+                        <button class="btn btn-success" type="submit">Mark as read</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="6">No Messages Found</td>
+            </tr>
+            {% endif %}
+        </table>
+    </center>
+    <br><br>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+            {% if messages.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page=1" tabindex="-1">First</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ messages.previous_page_number }}">Previous</a>
+            </li>
+            {% endif %}
+            {% for num in messages.paginator.page_range %}
+            {% if messages.number == num %}
+            <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+            {% else %}
+            <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+            {% endif %}
+            {% endfor %}
+            {% if messages.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ messages.next_page_number }}">Next</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ messages.paginator.num_pages }}">Last</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div><!-- Main Col END -->
+</div><!-- body-row END -->
+<script>
+    document.querySelectorAll('.delete-form').forEach(form => {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            var confirmDelete = confirm("Are you sure you want to delete this message?");
+            if (confirmDelete) {
+                form.submit();
+            }
+        });
+    });
+</script>
+</body>
+</html>

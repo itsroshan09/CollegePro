@@ -1,0 +1,93 @@
+{%load static %}
+{% include 'admin2/header.html' %}
+<style>
+    .usericon {
+        border-radius: 50%;
+        padding: 5px;
+        margin: 4%;
+        width: 20%;
+        border: solid 5px rgb(72, 122, 238);
+    }
+
+    input {
+        text-decoration: none;
+        background-color: white;
+        text-align: center;
+        outline: 0;
+
+    }
+</style>
+<!-- MAIN -->
+<div class="col p-4">
+    <center>
+        <h1 class="title">Upload Marksheet</h1>
+        <br>
+        <form method="post">
+            {% csrf_token %}
+            <div class="card" style="width: 100%; text-align:center;">
+                <center>
+                    <img src="{% static 'images/usericon.png'%}" class="usericon" alt="..." name="profilephoto">
+                </center>
+                <div class="card-body">
+
+
+
+
+                    <h5 class="card-title"><label><b>Student Name</b></label><input type="text" placeholder="full name"
+                            name="name" class="w3-input" required /></h5>
+
+
+                    <h5><label><b>Enrollment No.</b></label><input type="text" placeholder="enrollment" class="w3-input"
+                            name="enrollment" required /></h5>
+
+                    <h5><label><b>Department</b></label>
+                        <select name="department" class="w3-input" required style="text-align: center;">
+                            <option>Artificial Intelligence Department</option>
+                            <option>Information Technology Department</option>
+                            <option>Computer Engineering Department</option>
+                            <option>Mechanical Engineering Department</option>
+                            <option>Electrical Engineering Department</option>
+                            <option>Civil Engineering Department</option>
+                        </select>
+                    </h5>
+
+                    <p><b>Exam Year</b>
+                    <select name="year" style="text-align: center;">
+                        <script>
+                            for (let index = 2000; index < new Date().getFullYear()+3; index++) {
+                               document.write("<option>"+index+"</option>");
+                                
+                            }
+
+                        </script>
+
+
+                    </select></p>
+
+                    <p><b>Result</b><textarea placeholder="result" name="result" class="w3-input" required></textarea>
+                    </p>
+
+                    <p><b>Total Marks</b><br> <input type="number" placeholder="total marks" class="w3-input"
+                            name="total_marks" required /></p>
+
+                    <p><b>Total Marks Obtained</b><br><input type="number" placeholder="total marks obtained"
+                            class="w3-input" name="total_marks_obtained" required /></p>
+
+
+
+
+
+                    <button class="btn btn-success" type="submit">Save</button>
+
+
+
+                </div>
+            </div>
+
+    </center>
+    </form>
+</div><!-- Main Col END -->
+</div><!-- body-row END -->
+</body>
+
+</html>

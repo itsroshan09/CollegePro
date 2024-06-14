@@ -1,0 +1,83 @@
+{% load static %}
+{% include 'header.html' %}
+<head>
+<title>Study Materials</title>
+</head>
+<br>
+
+<body>
+    
+<center>
+    <h1 class="main-title fade-in">Study Materials</h1>
+</center>
+
+
+<div class="box fade-in">
+    <center>
+        <h2 class="title"><u>Artificial Intelligence Department</u></h2>
+    </center>
+    {% for i in ai %}
+    <h6><a href="{{ i.file.url }}">{{ i.filename}}</a></h6>
+    {% endfor %}
+</div>
+
+<div class="box fade-in">
+    <center>
+        <h2 class="title"><u>Information Technology Department</u></h2>
+    </center>
+    {% for i in it %}
+    <h6><a href="{{ i.file.url }}">{{ i.filename}}</a></h6>
+    {% endfor %}
+
+</div>
+
+<div class="box fade-in">
+    <center>
+        <h2 class="title"><u>Computer Engineering Department</u></h2>
+    </center>
+
+    {% for i in ce %}
+    <h6><a href="{{ i.file.url }}">{{ i.filename}}</a></h6>
+    {% endfor %}
+
+</div>
+
+<div class="box fade-in">
+    <center>
+        <h2 class="title"><u>Mechanical Department</u></h2>
+    </center>
+
+    {% for i in me %}
+        <h6><a href="{{ i.file.url }}">{{ i.filename}}</a></h6>
+        {% endfor %}
+
+</div>
+
+<div class="box fade-in">
+    <center>
+        <h2 class="title"><u>Electrical Enginnering Department</u></h2>
+    </center>
+
+    {% for i in ee %}
+        <h6><a href="{{ i.file.url }}">{{ i.filename}}</a></h6>
+        {% endfor %}
+
+</div>
+<div class="box fade-in">
+    <center>
+        <h2 class="title"><u>Civil Engineering Department</u></h2>
+    </center>
+
+    {% for i in cv %}
+        <h6><a href="{{ i.file.url }}">{{ i.filename}}</a></h6>
+        {% endfor %}
+
+</div>
+
+
+<div class="fade-in">
+{% include 'footer.html' %}
+</div>
+</body>
+
+</html>

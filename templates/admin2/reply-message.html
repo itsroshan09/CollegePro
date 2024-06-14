@@ -1,0 +1,31 @@
+{% load static %}
+{% include 'admin2/header.html'%}
+        <!-- MAIN -->
+        <div class="col p-4">
+            <center>
+                <h2 class="title">Reply Form</h2>
+                <div style="border: solid 3px rgb(0, 183, 255); border-radius: 10%; width: max-content; padding: 50px;">
+                    <form style="text-align: justify; width: fit-content;" method="post">
+                        {% csrf_token %}
+                        <label>Name:</label>
+                        <input value="{{message.name}}" name="name" disabled/>
+                        <br>
+                        <label>Email:</label>
+                        <input value="{{ message.email}}" name="email" disabled/>
+                        <br>
+                        <label>Message:</label>
+                        <input value="{{ message.message}}" name="message" disabled/>
+                        <br>
+                        <label>Reply:</label>
+                        <textarea placeholder="your reply message" name="replymessage"></textarea>
+                        <br>
+                        <button type="submit" class="btn btn-success">Send</button>
+                    </form>
+            </center>
+        </div>
+    </div>
+
+    </div><!-- body-row END -->
+</body>
+
+</html>

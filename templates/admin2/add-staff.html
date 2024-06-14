@@ -1,0 +1,87 @@
+{% load static %}
+{% include 'admin2/header.html'%}
+
+<style>
+        .usericon {
+                border-radius: 50%;
+                padding: 5px;
+                margin: 4%;
+                width: 20%;
+                border: solid 5px rgb(72, 122, 238);
+        }
+
+        input {
+                text-decoration: none;
+                background-color: white;
+                text-align: center;
+                outline: 0;
+
+        }
+</style>
+
+<!-- MAIN -->
+<div class="col p-4">
+        <center>
+                <h1 class="title">Add Staff</h1>
+                <br>
+                <form method="post" action="" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="card" style="width: 100%; text-align:center;">
+                                <center>
+                                        <img src="{% static 'images/usericon.png' %}" class="usericon" alt="..."
+                                                name="profilephoto">
+                                </center>
+                                <div class="card-body">
+
+                                        <h5 class="card-title"><label><b>Staff Photo</b></label><input type="file"
+                                                        name="photo" placeholder="full name" class="w3-input"
+                                                        required /></h5>
+
+
+                                        <h5 class="card-title"><label><b>Name</b></label><input type="text"
+                                                        placeholder="full name" name="name" class="w3-input" required />
+                                        </h5>
+
+
+                                        <h5><label><b>Department</b></label>
+                                                <select name="dept" class="w3-input" required
+                                                        style="text-align: center;">
+                                                        <option>Artificial Intelligence Department</option>
+                                                        <option>Information Technology Department</option>
+                                                        <option>Computer Engineering Department</option>
+                                                        <option>Mechanical Engineering Department</option>
+                                                        <option>Electrical Engineering Department</option>
+                                                        <option>Civil Engineering Department</option>
+                                                </select>
+                                        </h5>
+
+
+                                        <p><b>Designation:</b> <input type="text" placeholder="designation"
+                                                        class="w3-input" name="designation" required /></p>
+
+                                        <p><b>Contact:</b> <input type="text" placeholder="+911234567890"
+                                                        class="w3-input" name="contact" required /></p>
+
+
+                                        <p><b>Aadhar Card Number:</b><input type="text" placeholder="1234 5678 9012"
+                                                        class="w3-input" name="aadharno" required /></p>
+
+                                        <p><b>Address:</b><input type="text" placeholder="locality" class="w3-input"
+                                                        name="address" required /></p>
+
+
+
+                                        <button class="btn btn-success" type="submit">Save</button>
+
+
+
+                                </div>
+                        </div>
+
+        </center>
+        </form>
+</div><!-- Main Col END -->
+</div><!-- body-row END -->
+</body>
+
+</html>

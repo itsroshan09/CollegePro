@@ -1,0 +1,233 @@
+{% include 'header.html' %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+    }
+
+    .container4 {
+        width: 80%;
+        margin: auto;
+        overflow: hidden;
+        padding: 2rem;
+        background: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    .title {
+        font-size: 2rem;
+        color: #333;
+    }
+
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .row {
+        margin-bottom: 15px;
+        max-width: 100%;
+    }
+
+    .col-25 {
+        float: left;
+        width: 25%;
+        margin-top: 6px;
+    }
+
+    .col-75 {
+        float: left;
+        width: 75%;
+        margin-top: 6px;
+    }
+
+    input[type=text], input[type=file], select, textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+    }
+
+    input[type=submit] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        float: right;
+    }
+
+    input[type=submit]:hover {
+        background-color: #45a049;
+    }
+
+    .column {
+        float: left;
+        width: 25%;
+        padding: 10px;
+    }
+
+    .card {
+        background-color: white;
+        padding: 20px;
+        margin: 10px 0;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        text-align: center;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+
+    .card .info {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .card .info img {
+        margin-right: 10px;
+    }
+
+    .card .info p {
+        margin: 0;
+    }
+
+    @media screen and (max-width: 600px) {
+        .col-25, .col-75, .column {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        padding: 1rem 0;
+    }
+
+    .pagination a {
+        margin: 0 5px;
+        padding: 8px 16px;
+        text-decoration: none;
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .pagination a:hover {
+        background-color: #45a049;
+    }
+
+    .card p {
+        margin: 10px 0;
+    }
+
+    .stars {
+        color: #FFD700;
+    }
+</style>
+
+<body>
+    <div class="contactform">
+    <br>
+    <center>
+        <h2 class="title">Review Form</h2>
+    </center>
+    <div class="container4" style="margin-top: 1rem;">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-25">
+                    <label for="photo">Your Photo</label>
+                </div>
+                <div class="col-75">
+                    <input type="file" id="photo" name="photo" accept=".png,.jpg,.jpeg" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="name">Name</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="name" name="name" placeholder="Your name.." required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="stars">Rating</label>
+                </div>
+                <div class="col-75">
+                    <select id="stars" name="stars" required>
+                        <option>5</option>
+                        <option>4</option>
+                        <option>3</option>
+                        <option>2</option>
+                        <option>1</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="review">Review</label>
+                </div>
+                <div class="col-75">
+                    <textarea id="review" name="review" placeholder="Your Message.." required></textarea>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+</div>
+<br><br>
+<center>
+<h1 class="title">Some Reviews</h1>
+</center>
+<div class="row">
+    {% for i in reviews %}
+    <div class="column">
+        <div class="card">
+            <div class="info">
+                <img src="{{ i.photo.url }}" alt="photo"/>
+                <p><strong>{{ i.name }}</strong></p>
+            </div>
+            <p>{{ i.review }}</p>
+            <p class="stars">
+                {% for i2 in "12345" %}
+                {% if i2|add:0 <= i.rating %}
+                <i class="fas fa-star"></i>
+                {% else %}
+                <i class="far fa-star"></i>
+                {% endif %}
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+</body>
+
+{% include 'footer.html'%}

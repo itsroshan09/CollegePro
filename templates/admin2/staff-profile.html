@@ -1,0 +1,112 @@
+{% load static %}
+{% include 'admin2/header.html'%}
+<style>
+    .usericon {
+        border-radius: 50%;
+        padding: 5px;
+        height: 400px;
+        margin: 4%;
+        border: solid 5px rgb(72, 122, 238);
+    }
+
+    input {
+        text-decoration: none;
+        background-color: white;
+        text-align: center;
+        outline: 0;
+    }
+    
+    .popup {
+        overflow-y: auto;
+        background-color: rgba(241, 232, 232, 0.7);
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+        padding: 20px;
+    }
+
+    .popup img {
+        max-width: 100%;
+        max-height: 80vh;
+    }
+
+    #cross {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+</style>
+
+<!-- MAIN -->
+<div class="col p-4">
+    <center>
+        <div class="popup" id="popup">
+            <span id="cross" onclick="show()" class="fa fa-times" style="font-size: 20pt;"></span>
+            <br>
+            <img src="{{ staff.photo.url }}" alt="..." name="profilephoto">
+        </div>
+    </center>
+    <center>
+        <h1 class="title">Staff Details</h1>
+        <br>
+        <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card" style="width: 22rem; text-align:center;">
+                <img src="{{ staff.photo.url }}" class="usericon" alt="..." name="profilephoto" onclick="show()">
+                <p>Click On Image To Enlarge</p>
+                <div class="card-body">
+                    <h5 class="card-title">Name<b><input type="text" id="name" name="name" disabled="true" value="{{ staff.name}}" class="w3-input" /></b></h5>
+                    <h6>Designation<input type="text" id="designation" name="designation" disabled="true" value="{{ staff.designation}}" class="w3-input" /></h6>
+                    <h6><b>Department</b> <input type="text" id="department" name="department" disabled="true" value="{{ staff.department}}" class="w3-input" /></h6>
+                    <h6><b>Aadhar No</b> <input type="text" id="aadhar_no" name="aadhar_no" disabled="true" value="{{ staff.aadhar_no}}" class="w3-input" /></h6>
+                    <h6><b>Contact</b> <input type="text" id="contact" name="contact" disabled="true" value="{{ staff.contact}}" class="w3-input" /></h6>
+                    <h6><b>Address</b> <input type="text" id="addressline" name="addressline" disabled="true" value="{{ staff.addressline}}" class="w3-input" /></h6>
+                    
+                    
+                    <button class="btn btn-primary" type="button" id="edit-button" onclick="enableEdit()">Edit</button>
+                    <button class="btn btn-primary" type="submit" id="save-button" style="display:none;">Save</button>
+                    <button class="btn btn-danger" type="reset" id="cancel-button" style="display:none;" onclick="cancelEdit()">Cancel</button>
+                    <a href="{% url 'delete_staff' staff.id %}" class="btn btn-danger">Delete Account</a>
+                </div>
+            </div>
+        </form>
+    </center>
+</div><!-- Main Col END -->
+</div><!-- body-row END -->
+<script>
+    function show() {
+        var popup = document.getElementById('popup');
+        if (popup.style.display === "none") {
+            popup.style.display = "block";
+        } else {
+            popup.style.display = "none";
+        }
+    }
+
+    function enableEdit() {
+        var inputs = document.querySelectorAll('input');
+        inputs.forEach(function(input) {
+            input.disabled = false;
+        });
+        document.getElementById('edit-button').style.display = 'none';
+        document.getElementById('save-button').style.display = 'inline-block';
+        document.getElementById('cancel-button').style.display = 'inline-block';
+    }
+
+    function cancelEdit() {
+        var inputs = document.querySelectorAll('input');
+        inputs.forEach(function(input) {
+            input.disabled = true;
+        });
+        document.getElementById('edit-button').style.display = 'inline-block';
+        document.getElementById('save-button').style.display = 'none';
+        document.getElementById('cancel-button').style.display = 'none';
+    }
+</script>
+</body>
+
+</html>

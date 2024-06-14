@@ -1,0 +1,66 @@
+{% load static %}
+{% include 'staff/header.html'%}
+
+
+<style>
+    .usericon {
+        border-radius: 50%;
+        padding: 10px;
+        margin: 4%;
+        border: solid 5px rgb(72, 122, 238);
+    }
+
+    input {
+        text-decoration: none;
+        background-color: white;
+        text-align: center;
+        outline: 0;
+
+    }
+</style>
+<!-- MAIN -->
+<div class="col p-4">
+    <center>
+        <h1 class="title">Marksheet Data</h1>
+        <br>
+        <form method="post" action="">
+            <div class="card" style="width: 22rem; text-align:center;">
+                <img src="{% static 'images/usericon.png' %}" class="usericon" alt="...">
+                <div class="card-body">
+
+                    <h5 class="card-title">Student Name<b><input type="text" disabled="true" value="{{ marksheet.name}}"
+                                class="w3-input" name="name" /></b></h5>
+
+
+                    <h5>Enrollment No<input type="text" disabled="true" value="{{ marksheet.enrollment }}" class="w3-input" name="enrollment" /></h5>
+
+                    <h5>Year<input type="text" disabled="true" value="{{ marksheet.year }}" class="w3-input" name="year" />
+                    </h5>
+
+                    <h5>Course<input type="text" disabled="true" value="{{ marksheet.department}}" class="w3-input"
+                            name="course" /></h5>
+
+                    <b></b><input type="text" disabled="true" value="{{ marksheet.result }}" class="w3-input" name="result" />
+                    </p>
+
+
+                    <b>Total Marks:</b><input type="text" disabled="true" value="{{ marksheet.total_marks}}" class="w3-input"
+                        name="totalmarks" /></p>
+
+                    <b>Total Marks Obtained:</b><input type="text" disabled="true" value="{{ marksheet.total_marks_obtained }}" class="w3-input"
+                        name="markobtained" /></p>
+
+
+                 
+
+
+                </div>
+            </div>
+
+    </center>
+    </form>
+</div><!-- Main Col END -->
+</div><!-- body-row END -->
+</body>
+
+</html>

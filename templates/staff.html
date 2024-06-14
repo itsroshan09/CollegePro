@@ -1,0 +1,124 @@
+{% load static %}
+{% include 'header.html' %}
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .main-title {
+        font-size: 2.5rem;
+        color: #333;
+        margin: 1rem 0;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 0 -10px;
+    }
+
+    .column {
+        flex: 1 1 300px;
+        max-width: 300px;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    .card {
+        box-shadow: 0 6px 20px 0 rgba(32, 142, 244, 0.2);
+        padding: 16px;
+        text-align: center;
+        margin: auto;
+        width: 100%;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .card:hover {
+        background-color: rgb(166, 215, 247);
+        box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.3);
+        transform: translateY(-5px);
+    }
+
+    .image {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: rgb(51, 132, 245) 2px solid;
+        padding: 2%;
+        margin-bottom: 16px;
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover .image {
+        transform: scale(1.05);
+    }
+
+    @media screen and (max-width: 600px) {
+        .column {
+            flex: 1 1 100%;
+        }
+    }
+</style>
+<body>
+    
+<br>
+<center>
+    <h1 class="main-title fade-in">All Staff</h1>
+</center>
+<br>
+<center>
+    <div class="row">
+        {% for i in top %}
+        <div class="column fade-in">
+            <div class="card">
+                <center>
+                    <img src="{{ i.photo.url }}" alt="{{ i.name }}" class="image"/>
+                </center>
+                <p>{{ i.name }}</p>
+                <p><b>{{ i.designation }}</b></p>
+            </div>
+        </div>
+        {% endfor %}
+
+        {% for i in top2 %}
+        <div class="column fade-in">
+            <div class="card">
+                <center>
+                    <img src="{{ i.photo.url }}" alt="{{ i.name }}" class="image"/>
+                </center>
+                <p>{{ i.name }}</p>
+                <b>{{ i.designation }}</b>
+                <br><b>{{ i.department }}</b>
+           
+            </div>
+        </div>
+        {% endfor %}
+
+        {% for i in staff %}
+        <div class="column fade-in">
+            <div class="card">
+                <center>
+                    <img src="{{ i.photo.url }}" alt="{{ i.name }}" class="image"/>
+                </center>
+                <p>{{ i.name }}</p>
+                <b>{{ i.designation }}</b>
+                <b>{{ i.department }}</b>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</center>
+
+</body>
+
+<div class="fade-in">
+{% include 'footer.html' %}
+</div>

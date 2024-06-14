@@ -1,0 +1,104 @@
+{% load static %}
+{% include 'admin2/header.html'%}
+<style>
+    td,
+    th {
+        padding: 15px;
+        text-align: center;
+    }
+   
+    img {
+        max-width: 300px;
+        height: auto;
+    }
+
+    @media screen and (max-width: 600px) {
+        img {
+            width: 100%;
+        }
+    }
+</style>
+<!-- MAIN -->
+
+<div class="col p-4" style="overflow-y: auto;">
+    <center>
+        <h1 class="main-title">Reviews</h1>
+    </center>
+    <br>
+    <center>
+        <table border="all" style="margin-left: 0%;">
+            <tr>
+                <th>No.</th>
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Rating</th>
+                <th>Review</th>
+                <th>Action</th>
+            </tr>
+            {% if reviews|length > 0 %}
+            {% for i in reviews %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td style="padding: 10px;"><img src="{{ i.photo.url }}" /></td>
+                <td>{{ i.name }}</td>
+                <td>{{ i.rating }}</td>
+                <td>{{ i.review }}</td>
+                <td>
+                    <form class="delete-form" action="{% url 'allreviews' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ i.id }}">
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="6">No Reviews Found</td>
+            </tr>
+            {% endif %}
+        </table>
+    </center>
+    <br><br>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+            {% if reviews.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1" tabindex="-1">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ reviews.previous_page_number }}">Previous</a>
+                </li>
+            {% endif %}
+            {% for num in reviews.paginator.page_range %}
+                {% if reviews.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if reviews.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ reviews.next_page_number }}">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ reviews.paginator.num_pages }}">Last</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div><!-- Main Col END -->
+</div><!-- body-row END -->
+<script>
+    document.querySelectorAll('.delete-form').forEach(form => {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            var confirmDelete = confirm("Are you sure you want to delete this review?");
+            if (confirmDelete) {
+                form.submit();
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+{% load static %}
+{% include 'header.html' %}
+
+<style>
+    .box4{
+        background: url('{% static "images/marksheet-bg.jpg" %}');
+        background-repeat: no-repeat;
+        border: 5px black double ;   
+    }
+
+    .marksheet{
+        width: 50%;
+    }
+    @media screen and (max-width: 600px) {
+  
+  .marksheet {
+    width: 100%;
+  }
+}
+</style>
+<br>
+<center>
+    <h1 class="main-title">Download Marksheet</h1>
+</center>
+<!-- Marksheet Form Start -->
+
+<div class="marksheetform">
+    <div class="container3">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-25">
+                    <label for="enrollment">Enrollment No.</label>
+                </div>
+                <div class="col-75">
+                    <input id="enrollment" name="enrollment" placeholder="Your Enrollment Number" type="text" required />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="year">Exam Year</label>
+                </div>
+                <div class="col-75">
+                    <select name="year" id="year" required>
+                    </select>
+                    <script>
+                        var ddlYears = document.getElementById("year");
+                    
+                        // Determine the Current Year.
+                        var currentYear = (new Date()).getFullYear();
+                    
+                        // Loop and add the Year values to DropDownList in reverse order.
+                        for (var i = currentYear; i >= 2000; i--) {
+                            var option = document.createElement("OPTION");
+                            option.innerHTML = i;
+                            option.value = i;
+                            ddlYears.appendChild(option);
+                        }
+                    </script>
+                    
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Marksheet Form End -->
+
+<!-- Marksheet Structure Start -->
+{% if show %}
+<center>
+<div class="marksheet" id="marksheet">
+    <div class="box4">
+        <center><img src="{% static 'images/logo.png' %}" /></center>
+        <br>
+        <center>
+            <h3 class="title">STATEMENT OF MARKS</h3>
+            <br>
+            <hr>
+        </center>
+        <p>Mr/Ms: {{ result.name }}</p>
+        <hr>
+        <p>Enrollment No.: {{ result.enrollment }}</p>
+        <hr>
+        <p>Year: {{ result.year }}</p>
+        <hr>
+        <p>Course: {{ result.department }}</p>
+        <hr>
+        <p>Result: {{ result.result }}</p>
+        <hr>
+        <p>Total Marks: {{ result.total_marks }}</p>
+        <p>Total Marks Obtained: {{ result.total_marks_obtained }}</p>
+        <hr>
+        <p>Percentage: {{ result.percentage }}%</p>
+        <hr>
+        <p>Download Date:
+            <script>
+                d = new Date();
+                document.write(d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear())
+            </script>
+        </p>
+        <hr>
+        <center>
+            <button id="printbtn" onclick="printmarksheet()" class="printbtn">Print</button>
+        </center>
+    </div>
+</div>
+</center>
+{% elif error_message %}
+<div class="error-message">
+    <center>
+    <h2 style="color: red;;">{{ error_message }}</h2>
+</center>
+</div>
+{% endif %}
+<script>
+    function printmarksheet() {
+        var printContents = document.getElementById("marksheet").innerHTML;
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+</script>
+<!-- Marksheet Structure End -->
+
+{% include 'footer.html' %}

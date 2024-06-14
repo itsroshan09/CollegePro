@@ -1,0 +1,82 @@
+{% load static %}
+{% include 'header.html' %}
+
+<br>
+<center>
+<h1 class="main-title">Contact Us</h1>
+</center>
+<br><br>
+<div class="section2">
+    <div class="contactform">
+        <center>
+            <h2 class="title">Contact Form</h2>
+        </center>
+        <div class="container4" style="margin-top: 1rem;">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-25">
+                        <label for="fname"> Name</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" id="name" name="name" placeholder="Your name.." required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="country">Email</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="email" id="email" placeholder="Your Email" name="email" required/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="subject">Message</label>
+                    </div>
+                    <div class="col-75">
+                        <textarea id="subject" name="message" placeholder="Your Message.." required></textarea>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+    <center>
+        <div class="box2" style="width: fit-content; padding: 2rem;">
+    
+            <center>
+                <h2 class="title">Contact Details</h2>
+                <br>
+                <p>
+                    I/C Principal : Shri. A. T. Bari<br>
+                    National Highway No. 6 , <Br>Jalgaon - 425 002<BR>
+                    Tel : - +91 257 2221721<Br>
+                    Fax : - +91 257 2221719<Br>
+                    E - mail : - govtpolyjalgaon@rediffmail.com<br></p>
+    
+            </center>
+    
+    
+        </div>
+    </center>
+
+    <center>
+        <div class="box" style="width:fit-content;">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1862.3655905196558!2d75.5488885472975!3d21.00341018268011!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd90fb62e8c930f%3A0x3ec28692c6ab9cb1!2sGovernment%20Polytechnic%20Jalgaon!5e0!3m2!1sen!2sin!4v1716898065058!5m2!1sen!2sin"
+                width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </center>
+</div>
+</div>
+
+{% include 'footer.html' %}
